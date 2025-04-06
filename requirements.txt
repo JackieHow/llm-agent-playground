@@ -1,0 +1,6 @@
+tornado==6.4.2
+genshi==0.7.9
+lxml==5.3.1
+typing==3.10.0.0
+flask==3.1.0
+dataclasses==0.8
