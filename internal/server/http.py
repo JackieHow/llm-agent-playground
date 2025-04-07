@@ -14,7 +14,8 @@ from config import Config
 from internal.exception import CustomException
 from internal.router import Router
 from pkg.response import json, Response, HttpCode
-
+from flask_sqlalchemy import SQLAlchemy
+ 
 
 class Http(Flask):
     """Http服务引擎"""
@@ -23,6 +24,7 @@ class Http(Flask):
         self,
         *args,
         conf: Config,
+        db: SQLAlchemy,
         router: Router,
         **kwargs,
     ):
@@ -35,7 +37,11 @@ class Http(Flask):
         # 3.注册绑定异常错误处理
         self.register_error_handler(Exception, self._register_error_handler)
 
- 
+        # 4.初始化数据库
+        db.init_app(self)
+        with self.app_context():
+            db.create_all()
+        
 
         # 5.注册应用路由
         router.register_router(self)
