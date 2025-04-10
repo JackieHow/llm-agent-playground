@@ -8,6 +8,7 @@
 import os
 
 from flask import Flask
+from flask_migrate import Migrate
 
 
 from config import Config
@@ -25,6 +26,7 @@ class Http(Flask):
         *args,
         conf: Config,
         db: SQLAlchemy,
+        migrate: Migrate,
         router: Router,
         **kwargs,
     ):
@@ -39,8 +41,7 @@ class Http(Flask):
 
         # 4.初始化数据库
         db.init_app(self)
-        with self.app_context():
-            db.create_all()
+        migrate.init_app(self, db, directory="internal/migration")
 
         # 5.注册应用路由
         router.register_router(self)

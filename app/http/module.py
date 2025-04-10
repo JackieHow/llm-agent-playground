@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# from flask_migrate import Migrate
+from flask_migrate import Migrate
 from pkg.sqlalchemy import SQLAlchemy
 from injector import Module, Binder
 
 from internal.extension.database_extension import db
-# from internal.extension.migrate_extension import migrate
+from internal.extension.migrate_extension import migrate
 
 
 
@@ -15,4 +15,4 @@ class ExtensionModule(Module):
 
     def configure(self, binder: Binder) -> None:
         binder.bind(SQLAlchemy, to=db)
-        # binder.bind(Migrate, to=migrate)
+        binder.bind(Migrate, to=migrate)

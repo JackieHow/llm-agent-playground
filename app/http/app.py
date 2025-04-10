@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import dotenv
+from flask_migrate import Migrate
 from pkg.sqlalchemy import SQLAlchemy
 from injector import Injector
 
@@ -22,6 +23,7 @@ app = Http(
     __name__,
     conf=conf,
     db=injector.get(SQLAlchemy),
+    migrate=injector.get(Migrate),
     router=injector.get(Router),
 )
 
